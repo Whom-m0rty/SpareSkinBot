@@ -8,7 +8,7 @@ import json
 from .models import *
 # Create your views here.
 
-base_url = 'https://telegg.ru/orig/bot'
+base_url = 'https://api.telegram.org/bot'
 chat_id = '415924423'
 text = 'Ваш статус заказа изменен!'
 
@@ -19,7 +19,11 @@ def notice_status(request):
         data = json.loads(request.body.decode())
         status = data['status']
         if status == 'on-hold':
-            message_text = Message.objects.get(title='on-hold').text
+            items = data['line_items']
+            items_formated = ''
+            for item in items:
+                items_formated += item['name']
+            message_text = Message.objects.get(title='on-hold').text.format(items=items_formated)
             response = requests.get(
                 base_url + settings.TOKEN + '/sendMessage?chat_id=' + str(chat_id) + '&text=' + message_text)
         return HttpResponse('OK')
