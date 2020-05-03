@@ -16,5 +16,5 @@ def notice_status(request):
     if request.method == 'POST':
         response = requests.get(base_url + settings.TOKEN + '/sendMessage?chat_id=' + str(chat_id) + '&text=' + text)
         print(response.text)
-        print(request.POST)
+        print(request.POST['status'])
         return HttpResponse('OK')
