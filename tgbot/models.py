@@ -8,6 +8,6 @@ class User(models.Model):
     orders = models.TextField(default=':')
 
 
-class Messages(models.Model):
+class Message(models.Model):
     title = models.CharField(max_length=256)
     text = models.TextField()

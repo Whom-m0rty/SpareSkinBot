@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 import requests
 import json
 
+from .models import *
 # Create your views here.
 
 base_url = 'https://telegg.ru/orig/bot'
@@ -19,5 +20,5 @@ def notice_status(request):
         data = json.loads(request.body.decode())
         status = data['status']
         if status == 'on-hold':
-            pass
+            message_text =  Messages.objects.get(title='on-hold').text
         return HttpResponse('OK')
