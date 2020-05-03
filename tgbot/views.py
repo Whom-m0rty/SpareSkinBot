@@ -17,6 +17,7 @@ def notice_status(request):
     if request.method == 'POST':
         response = requests.get(base_url + settings.TOKEN + '/sendMessage?chat_id=' + str(chat_id) + '&text=' + text)
         data = json.loads(request.body.decode())
-        print(data)
-        print(data['status'])
+        status = data['status']
+        if status == 'on-hold':
+            pass
         return HttpResponse('OK')
