@@ -16,9 +16,10 @@ text = 'Ваш статус заказа изменен!'
 @csrf_exempt
 def notice_status(request):
     if request.method == 'POST':
-        response = requests.get(base_url + settings.TOKEN + '/sendMessage?chat_id=' + str(chat_id) + '&text=' + text)
         data = json.loads(request.body.decode())
         status = data['status']
         if status == 'on-hold':
-            message_text =  Messages.objects.get(title='on-hold').text
+            message_text = Message.objects.get(title='on-hold').text
+            response = requests.get(
+                base_url + settings.TOKEN + '/sendMessage?chat_id=' + str(chat_id) + '&text=' + message_text)
         return HttpResponse('OK')
