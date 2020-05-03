@@ -3,6 +3,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 
 import requests
+import json
 
 # Create your views here.
 
@@ -15,6 +16,7 @@ text = 'Ваш статус заказа изменен!'
 def notice_status(request):
     if request.method == 'POST':
         response = requests.get(base_url + settings.TOKEN + '/sendMessage?chat_id=' + str(chat_id) + '&text=' + text)
-        print(response.text)
-        print(request.POST['status'])
+        data = json.loads(request.body.decode())
+        print(data)
+        print(data['status'])
         return HttpResponse('OK')
